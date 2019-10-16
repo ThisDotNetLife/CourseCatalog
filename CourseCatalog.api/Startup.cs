@@ -1,4 +1,5 @@
 using CourseCatalog.api.Services;
+using DataLayerServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,7 +28,7 @@ namespace CourseCatalog.api {
                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             config = builder.Build();
 
-            services.AddSingleton<IDataRepository, DataRepository>();
+            services.AddScoped<IWebcastRepository, WebcastRepository>();
 
             #endregion
 

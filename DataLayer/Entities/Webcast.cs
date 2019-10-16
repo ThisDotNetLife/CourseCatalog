@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace CourseCatalog.api.Entities {
+namespace DataLayer.Entities {
     public class Webcast {
         [Key]
         public int ID { get; set; }
@@ -25,7 +25,7 @@ namespace CourseCatalog.api.Entities {
         public string Author { get; set; }
 
         [Required(ErrorMessage = "Date when webcast was acquired or when it was released is required.")]
-        public DateTime ReleaseDate { get; set; }
+        public string ReleaseDate { get; set; }
 
         [Required(ErrorMessage = "Summary that describes the webcast is required.")]
         public string Summary { get; set; }
@@ -34,6 +34,10 @@ namespace CourseCatalog.api.Entities {
         [MaxLength(200)]
         public string URL { get; set; }
 
-        public ICollection<Tag> Tags { get; set; } = new List<Tag>();
+        [Required(ErrorMessage = "Tag (topic) is required.")]
+        [MaxLength(200)]
+        public string Tag { get; set; }
+
+        //public ICollection<Tag> Tags { get; set; } = new List<Tag>();
     }
 }

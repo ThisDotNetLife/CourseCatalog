@@ -1,4 +1,5 @@
 ﻿using CourseCatalog.api.Services;
+using DataLayerServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CourseCatalog.api.Controllers {
@@ -7,15 +8,15 @@ namespace CourseCatalog.api.Controllers {
     [ApiController]
     public class IndexController : ControllerBase
     {
-        private readonly IDataRepository _dataRepository;
+        private readonly IWebcastRepository _dataRepository;
 
-        public IndexController(IDataRepository dataRepository) {
+        public IndexController(IWebcastRepository dataRepository) {
             _dataRepository = dataRepository;
         }
 
-        public IActionResult Index() {
-            string conn = _dataRepository.GetConnectionString();
-            return Created(nameof(DTO.GET_Index), new { ConnectionString = conn });
-        }
+        //public IActionResult Index() {
+        //    string conn = _dataRepository.GetConnectionString();
+        //    return Created(nameof(DataLayer.DTO.GET_Index), new { ConnectionString = conn });
+        //}
     }
 }

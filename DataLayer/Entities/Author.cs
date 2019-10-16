@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CourseCatalog.api.Entities {
+namespace DataLayer.Entities {
     public class Author {
         [Key]
         public int ID { get; set; }

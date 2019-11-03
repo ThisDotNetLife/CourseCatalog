@@ -24,12 +24,18 @@ namespace CourseCatalog.api.Controllers
             _dataRepository = dataRepository;
         }
 
-        // GET: api/Webcasts/GetAll
         [HttpGet()]
-        public List<DataLayer.Entities.Webcast> GetAll() {
-            List<DataLayer.Entities.Webcast> webcasts = _dataRepository.GetAll();
-
-            return webcasts;
+        [Route("ValidateFilesOnDisk")]
+        public IActionResult ValidateFilesOnDisk(string driveLetter="") {
+            try {
+                return StatusCode(200, _dataRepository.ValidateFilesOnDisk(driveLetter));
+            }
+            catch (Exception ex) {
+                dynamic response = new ExpandoObject();
+                response.ErrorMsg = ex.Message;
+                string errMsg = JsonConvert.SerializeObject(response, Formatting.Indented);
+                return BadRequest(errMsg);
+            }
         }
 
         [HttpPost()]
@@ -45,7 +51,37 @@ namespace CourseCatalog.api.Controllers
                 return StatusCode(201, jsonFormatted);
             }
             catch (Exception ex) {
+                dynamic response = new ExpandoObject();
+                response.ErrorMsg = ex.Message;
+                string errMsg = JsonConvert.SerializeObject(response, Formatting.Indented);
+                return BadRequest(errMsg);
+            }
+        }
 
+        [HttpDelete()]
+        [Route("Delete")]
+        public IActionResult Delete(int ID) {
+            try {
+                _dataRepository.Delete(ID);
+                return StatusCode(200);
+            }
+            catch (Exception ex) {
+                dynamic response = new ExpandoObject();
+                response.ErrorMsg = ex.Message;
+                string errMsg = JsonConvert.SerializeObject(response, Formatting.Indented);
+                return BadRequest(errMsg);
+            }
+        }
+
+        [HttpGet()]
+        [Route("RetrieveByID/{ID}")]
+        public IActionResult RetrieveByID(int ID) {
+            try {
+                string vendors = _dataRepository.GetWebcastByID(ID);
+                string jsonFormatted = JValue.Parse(vendors).ToString(Formatting.Indented);
+                return StatusCode(200, jsonFormatted);
+            }
+            catch (Exception ex) {
                 dynamic response = new ExpandoObject();
                 response.ErrorMsg = ex.Message;
                 string errMsg = JsonConvert.SerializeObject(response, Formatting.Indented);

@@ -7,12 +7,14 @@ using DataLayer.Entities;
 namespace DataLayerServices {
     public interface IWebcastRepository {
 
-        Webcast Find(int ID);
-
-        List<Webcast> GetAll();
+        List<Webcast> Search(int ID);
 
         String Save(Webcast webcast);
 
-        Webcast Delete(int ID);
+        void Delete(int ID);
+
+        List<String> ValidateFilesOnDisk(string driveLetter);
+
+        string GetWebcastByID(int ID);
     }
 }

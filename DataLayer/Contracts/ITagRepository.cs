@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace DataLayerServices {
-    public interface IAuthorRepository {
+    public interface ITagRepository {
 
         string Get();
 
-        void Update(DataLayer.Entities.Author author);
+        void Update(DataLayer.Entities.Tag tag);
     }
 }

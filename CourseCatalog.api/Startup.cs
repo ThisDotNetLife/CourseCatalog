@@ -28,7 +28,10 @@ namespace CourseCatalog.api {
                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             config = builder.Build();
 
-            services.AddScoped<IWebcastRepository, WebcastRepository>();
+            services.AddScoped<IWebcastRepository,  WebcastRepository>();
+            services.AddScoped<IAuthorRepository,   AuthorRepository>();
+            services.AddScoped<IVendorRepository,   VendorRepository>();
+            services.AddScoped<ITagRepository,      TagRepository>();
 
             #endregion
 

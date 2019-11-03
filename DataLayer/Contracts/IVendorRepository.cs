@@ -6,14 +6,8 @@ using System.Threading.Tasks;
 namespace DataLayerServices {
     public interface IVendorRepository {
 
-        DataLayer.Entities.Vendor Find(int ID);
+        string Get();
 
-        List<DataLayer.Entities.Vendor> GetAll();
-
-        DataLayer.Entities.Vendor Add(DataLayer.Entities.Webcast webcast);
-
-        DataLayer.Entities.Vendor Update(DataLayer.Entities.Webcast webcast);
-
-        DataLayer.Entities.Vendor Remove(int ID);
+        void Update(DataLayer.Entities.Vendor vendor);
     }
 }

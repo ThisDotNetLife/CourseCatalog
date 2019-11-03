@@ -11,6 +11,6 @@ namespace DataLayer.Entities {
 
         [Required(ErrorMessage = "Name of author is required.")]
         [MaxLength(50, ErrorMessage = "Name of author cannot be greater than 50 characters.")]
-        public string FullName { get; set; }
+        public string Descr { get; set; }
     }
 }

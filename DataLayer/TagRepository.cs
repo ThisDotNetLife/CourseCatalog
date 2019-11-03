@@ -9,19 +9,19 @@ using System.Data;
 using System.Text;
 
 namespace CourseCatalog.api.Services {
-    public class VendorRepository : IVendorRepository {
+    public class TagRepository : ITagRepository {
 
         private readonly IConfiguration configuration;
         private readonly string conn = string.Empty;
 
-        public VendorRepository(IConfiguration config) {
+        public TagRepository(IConfiguration config) {
             configuration = config;
             conn = config.GetConnectionString("DefaultConnection");
         }
 
         public string Get() {
             string jsonOutput = string.Empty;
-            string spName = "jsonGetVendors";
+            string spName = "jsonGetTags";
 
             try {
                 using (SqlConnection cn = new SqlConnection(conn)) {
@@ -46,9 +46,9 @@ namespace CourseCatalog.api.Services {
             }
         }
 
-        public void Update(Vendor vendor) {
-            string jsonInput = JsonConvert.SerializeObject(vendor, Formatting.None);
-            string spName = "jsonUpdateVendor";
+        public void Update(Tag tag) {
+            string jsonInput = JsonConvert.SerializeObject(tag, Formatting.None);
+            string spName = "jsonUpdateTag";
 
             try {
                 using (SqlConnection cn = new SqlConnection(conn)) {

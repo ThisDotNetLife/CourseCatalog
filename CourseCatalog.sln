@@ -7,32 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseCatalog.API", "Course
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseCatalog.DAL", "DataLayer\CourseCatalog.DAL.csproj", "{109CFFB6-79D2-4355-8D5B-B0639DB7D435}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CourseCatalog.SQL", "CourseCatalog.SQL", "{BBEE18E1-ED34-4C27-B27B-E65AB323A2E8}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05_Stored_Procedures", "05_Stored_Procedures", "{060FC059-C573-4DB1-89E3-3930136E0962}"
-	ProjectSection(SolutionItems) = preProject
-		..\CourseCatalog.SQL\DeleteWebcast.sql = ..\CourseCatalog.SQL\DeleteWebcast.sql
-		..\CourseCatalog.SQL\jsonGetAuthors.sql = ..\CourseCatalog.SQL\jsonGetAuthors.sql
-		..\CourseCatalog.SQL\jsonGetTags.sql = ..\CourseCatalog.SQL\jsonGetTags.sql
-		..\CourseCatalog.SQL\jsonGetVendors.sql = ..\CourseCatalog.SQL\jsonGetVendors.sql
-		..\CourseCatalog.SQL\jsonGetWebcast.sql = ..\CourseCatalog.SQL\jsonGetWebcast.sql
-		..\CourseCatalog.SQL\jsonSaveWebcast.sql = ..\CourseCatalog.SQL\jsonSaveWebcast.sql
-		..\CourseCatalog.SQL\jsonSearchWebcasts.sql = ..\CourseCatalog.SQL\jsonSearchWebcasts.sql
-		..\CourseCatalog.SQL\jsonUpdateAuthor.sql = ..\CourseCatalog.SQL\jsonUpdateAuthor.sql
-		..\CourseCatalog.SQL\jsonUpdateTag.sql = ..\CourseCatalog.SQL\jsonUpdateTag.sql
-		..\CourseCatalog.SQL\jsonUpdateVendor.sql = ..\CourseCatalog.SQL\jsonUpdateVendor.sql
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01_Schema", "01_Schema", "{DC827444-AA3B-4C5D-8831-4EDC3737BDDF}"
-	ProjectSection(SolutionItems) = preProject
-		..\CourseCatalog.SQL\01_Schema.sql = ..\CourseCatalog.SQL\01_Schema.sql
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "07_Data", "07_Data", "{B136C2E1-7726-4312-B9CD-1479D966CB71}"
-	ProjectSection(SolutionItems) = preProject
-		..\CourseCatalog.SQL\01_Data.sql = ..\CourseCatalog.SQL\01_Data.sql
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,11 +24,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{060FC059-C573-4DB1-89E3-3930136E0962} = {BBEE18E1-ED34-4C27-B27B-E65AB323A2E8}
-		{DC827444-AA3B-4C5D-8831-4EDC3737BDDF} = {BBEE18E1-ED34-4C27-B27B-E65AB323A2E8}
-		{B136C2E1-7726-4312-B9CD-1479D966CB71} = {BBEE18E1-ED34-4C27-B27B-E65AB323A2E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {494CB9FA-4C49-4FC5-A975-B2DAE07243C5}

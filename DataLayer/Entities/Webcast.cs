@@ -34,10 +34,6 @@ namespace DataLayer.Entities {
         [MaxLength(200)]
         public string URL { get; set; }
 
-        [Required(ErrorMessage = "Tag (topic) is required.")]
-        [MaxLength(200)]
-        public string Tag { get; set; }
-
-        //public ICollection<Tag> Tags { get; set; } = new List<Tag>();
+        public string[] Tags { get; set; }
     }
 }

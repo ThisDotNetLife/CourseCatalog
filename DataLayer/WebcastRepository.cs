@@ -24,8 +24,58 @@ namespace CourseCatalog.api.Services {
             defaultDriveLetter = config.GetSection("Features:FileValidation:DefaultDriveLetter").Value;
         }
 
-        public List<Webcast> Search(int ID) {
-            throw new NotImplementedException();
+        public string Search(CourseCatalog.DAL.DTO.SearchCriteria searchCriteria) {
+            string jsonInput = JsonConvert.SerializeObject(searchCriteria, Formatting.None);
+            string jsonOutput = string.Empty;
+            string spName = "jsonSearchWebcasts";
+
+            try {
+                using (SqlConnection cn = new SqlConnection(conn)) {
+                    var cmd = new SqlCommand(cmdText: spName, connection: cn) {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    cmd.Parameters.AddWithValue(parameterName: "@JsonInput", value: jsonInput);
+                    cn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows) {
+                        reader.Read();
+                        jsonOutput = reader["JsonOutput"].ToString();
+                    }
+                    reader.Close();
+                }
+
+                string target = "Tags" + (char)34 + ":" + (char)34 + "[";
+
+                if (jsonOutput.IndexOf(target) > -1) {
+                    return CleanupStringArray(jsonOutput);
+                } else {
+                    return jsonOutput;
+                }
+            }
+            catch (Exception ex) {
+                System.Diagnostics.Debug.WriteLine(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This method will cleanup JSON string arrays returned by SQL Server so they are correctly 
+        /// interpreted by JSON parsers such as Postman. For example, jsonInput might contain the
+        /// following JSON fragment:  "Tags":"[\"Javascript\",\"JavaScript Classes\"]"}]
+        /// After cleanup, this fragment would look like: "Tags": ["Javascript","JavaScript Classes"]
+        /// </summary>
+        /// <param name="jsonInput"></param>
+        /// <returns></returns>
+        private string CleanupStringArray(string jsonInput) {
+            const char dblQuote = (char)34;
+            string str1of3B = "Tags" + dblQuote + ":" + dblQuote + "[";
+            string str1of3A = "Tags" + dblQuote + ":" + "[";
+            string str2of3B = "]" + dblQuote + "}]";
+            string str2of3A = "]}]";
+            string str3of3 = @"\" + dblQuote;
+
+            return jsonInput.Replace(str1of3B, str1of3A).Replace(str2of3B, str2of3A).Replace(str3of3, dblQuote.ToString());
         }
 
         public void Delete(int ID) {
@@ -68,6 +118,13 @@ namespace CourseCatalog.api.Services {
                         jsonOutput = reader["JsonOutput"].ToString();
                     }
                     reader.Close();
+                }
+                string target = "Tags" + (char)34 + ":" + (char)34 + "[";
+
+                if (jsonOutput.IndexOf(target) > -1) {
+                    return CleanupStringArray(jsonOutput);
+                } else {
+                    return jsonOutput;
                 }
                 return jsonOutput;
             }
@@ -138,34 +195,6 @@ namespace CourseCatalog.api.Services {
             }
             catch (Exception ex) {
                 throw ex;
-            }
-        }
-
-        public string GetWebcastByID(int ID) {
-            string jsonOutput = string.Empty;
-            string spName = "jsonGetWebcastByID";
-
-            try {
-                using (SqlConnection cn = new SqlConnection(conn)) {
-                    var cmd = new SqlCommand(cmdText: spName, connection: cn) {
-                        CommandType = CommandType.StoredProcedure
-                    };
-                    cmd.Parameters.AddWithValue(parameterName: "@ID", value: ID);
-
-                    cn.Open();
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    if (reader.HasRows) {
-                        reader.Read();
-                        jsonOutput = reader["JsonOutput"].ToString();
-                    }
-                    reader.Close();
-                }
-                return jsonOutput;
-            }
-            catch (Exception ex) {
-                System.Diagnostics.Debug.WriteLine(ex);
-                throw;
             }
         }
     }

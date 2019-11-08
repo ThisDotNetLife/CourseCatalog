@@ -74,10 +74,10 @@ namespace CourseCatalog.api.Controllers
         }
 
         [HttpGet()]
-        [Route("RetrieveByID/{ID}")]
-        public IActionResult RetrieveByID(int ID) {
+        [Route("Search")]
+        public IActionResult Search(CourseCatalog.DAL.DTO.SearchCriteria searchCriteria) {
             try {
-                string vendors = _dataRepository.GetWebcastByID(ID);
+                string vendors = _dataRepository.Search(searchCriteria);
                 string jsonFormatted = JValue.Parse(vendors).ToString(Formatting.Indented);
                 return StatusCode(200, jsonFormatted);
             }

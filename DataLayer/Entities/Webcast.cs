@@ -10,7 +10,7 @@ namespace DataLayer.Entities {
         public int ID { get; set; }
 
         [MaxLength(200)]
-        public string PhysicalPath { get; set; }
+        public string FolderOnDisk { get; set; }
 
         [Required(ErrorMessage = "Title is required.")]
         [MaxLength(500, ErrorMessage = "Title cannot be greater than 500 characters.")]

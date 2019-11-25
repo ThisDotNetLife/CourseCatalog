@@ -14,5 +14,7 @@ namespace DataLayerServices {
         void Delete(int ID);
 
         List<String> ValidateFilesOnDisk(string driveLetter);
+
+        String FoldersOnDisk();
     }
 }

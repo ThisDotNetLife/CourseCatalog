@@ -12,6 +12,9 @@ namespace CourseCatalog.api {
 
         private static IConfigurationRoot config;
 
+        // ENABLE CORS STEP 1 0f 3: Set policy name , which happens to be arbitrary.
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
         }
@@ -35,6 +38,21 @@ namespace CourseCatalog.api {
 
             #endregion
 
+            // ENABLE CORS STEP 2 of 3: Call AddCors with a lambda expression. The lambda takes a CorsPolicyBuilder object. 
+            // Configuration options, such as WithOrigins, are described later in these articles:
+            // https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-3.0
+            // https://stackoverflow.com/questions/31942037/how-to-enable-cors-in-asp-net-core
+
+            services.AddCors(options => {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder => {
+                    builder.AllowAnyHeader()
+                           .AllowAnyMethod()
+                           .AllowAnyOrigin()
+                           .AllowCredentials();
+                });
+            });
+
             services.AddControllers();
         }
 
@@ -43,6 +61,10 @@ namespace CourseCatalog.api {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
             }
+
+            // ENABLE CORS STEP 3 of 3: Calls UseCors extension method, which enables CORS.
+            // By enabling CORS as shown here, the policy is applied to all controller and actions in the API.
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseRouting();
 

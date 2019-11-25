@@ -38,6 +38,38 @@ namespace CourseCatalog.api.Controllers
             }
         }
 
+        [HttpGet()]
+        [Route("FoldersOnDisk")]
+        public IActionResult TopicsOnDisk() {
+            try {
+                string topics = _dataRepository.FoldersOnDisk();
+                string jsonFormatted = JValue.Parse(topics).ToString(Formatting.Indented);
+                return StatusCode(200, jsonFormatted);
+            }
+            catch (Exception ex) {
+                dynamic response = new ExpandoObject();
+                response.ErrorMsg = ex.Message;
+                string errMsg = JsonConvert.SerializeObject(response, Formatting.Indented);
+                return BadRequest(errMsg);
+            }
+        }
+
+        [HttpGet()]
+        [Route("Search")]
+        public IActionResult Search(CourseCatalog.DAL.DTO.SearchCriteria searchCriteria) {
+            try {
+                string vendors = _dataRepository.Search(searchCriteria);
+                string jsonFormatted = JValue.Parse(vendors).ToString(Formatting.Indented);
+                return StatusCode(200, jsonFormatted);
+            }
+            catch (Exception ex) {
+                dynamic response = new ExpandoObject();
+                response.ErrorMsg = ex.Message;
+                string errMsg = JsonConvert.SerializeObject(response, Formatting.Indented);
+                return BadRequest(errMsg);
+            }
+        }
+
         [HttpPost()]
         [Route("Save")]
         public IActionResult Save(DataLayer.Entities.Webcast webcast) {
@@ -64,22 +96,6 @@ namespace CourseCatalog.api.Controllers
             try {
                 _dataRepository.Delete(ID);
                 return StatusCode(200);
-            }
-            catch (Exception ex) {
-                dynamic response = new ExpandoObject();
-                response.ErrorMsg = ex.Message;
-                string errMsg = JsonConvert.SerializeObject(response, Formatting.Indented);
-                return BadRequest(errMsg);
-            }
-        }
-
-        [HttpGet()]
-        [Route("Search")]
-        public IActionResult Search(CourseCatalog.DAL.DTO.SearchCriteria searchCriteria) {
-            try {
-                string vendors = _dataRepository.Search(searchCriteria);
-                string jsonFormatted = JValue.Parse(vendors).ToString(Formatting.Indented);
-                return StatusCode(200, jsonFormatted);
             }
             catch (Exception ex) {
                 dynamic response = new ExpandoObject();

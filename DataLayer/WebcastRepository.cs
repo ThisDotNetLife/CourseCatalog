@@ -153,7 +153,7 @@ namespace CourseCatalog.api.Services {
             
             DataTable dt = new DataTable();                // Create new DataTable object for filling.
 
-            string sql = @"SELECT ID, PhysicalPath, Title FROM dbo.Webcast WHERE LEN(PhysicalPath) > 0";
+            string sql = @"SELECT ID, FolderOnDisk, Title FROM dbo.Webcast WHERE LEN(FolderOnDisk) > 0";
 
             try {        
                 using (SqlConnection cnn = new SqlConnection(conn)) {
@@ -173,9 +173,9 @@ namespace CourseCatalog.api.Services {
                 #endregion
 
                 foreach (DataRow row in dt.Rows) {
-                    string physicalPath   = row["PhysicalPath"].ToString();
+                    string folderOnDisk   = row["FolderOnDisk"].ToString();
                     string title          = row["Title"].ToString();
-                    string folderLocation = string.Format("{0}:\\{1}\\{2}", driveLetter, physicalPath, title);
+                    string folderLocation = string.Format("{0}:\\{1}\\{2}", driveLetter, folderOnDisk.Replace("|", @"\"), title);
 
                     bool isFoundOnDisk = Directory.Exists(folderLocation) ? true : false;
                     if (!isFoundOnDisk) {
@@ -195,6 +195,32 @@ namespace CourseCatalog.api.Services {
             }
             catch (Exception ex) {
                 throw ex;
+            }
+        }
+
+        public string FoldersOnDisk() {
+            string jsonOutput = string.Empty;
+            string spName = "jsonGetFoldersOnDisk";
+
+            try {
+                using (SqlConnection cn = new SqlConnection(conn)) {
+                    var cmd = new SqlCommand(cmdText: spName, connection: cn) {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    cn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows) {
+                        reader.Read();
+                        jsonOutput = reader["JsonOutput"].ToString();
+                    }
+                    reader.Close();
+                }
+                return jsonOutput;
+            }
+            catch (Exception ex) {
+                System.Diagnostics.Debug.WriteLine(ex);
+                throw;
             }
         }
     }
